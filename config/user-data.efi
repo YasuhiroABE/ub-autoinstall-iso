@@ -1,0 +1,88 @@
+#cloud-config
+autoinstall:
+  version: 1
+  identity:
+    hostname: ub2204
+    username: ubuntu
+    # password: "secret" ($ openssl passwd -6 -salt $(openssl rand -hex 8) "secret")
+    password: "$6$1deb934eb89e6d28$Dvr8HQRlBvpX4PVSLB0tOcQqfD38L8glDWIk.tjQQNMh9OvXqhz45hPEC6yoJSMWGTvOdUX8n.f7XZ5EbtJy.1"
+  early-commands: []
+  storage:
+    swap:
+      size: 0
+    grub:
+      install_devices:
+        - partition-1
+    config:
+      - id: root-ssd
+        type: disk
+        ptable: gpt
+        match:
+          size: largest
+        wipe: superblock-recursive
+        preserve: false
+        grub_device: true
+        name: "CrucialSSD"
+      - id: partition-1
+        type: partition
+        size: 256M
+        number: 1
+        device: root-ssd
+        wipe: superblock
+        flag: boot
+        preserve: false
+        grub_device: true
+      - id: partition-2
+        type: partition
+        size: 2G
+        number: 2
+        device: root-ssd
+        wipe: superblock
+        flag: swap
+        preserve: false
+      - id: partition-3
+        type: partition
+        size: -1
+        number: 3
+        device: root-ssd
+        wipe: superblock
+        preserve: false
+      - id: format-1
+        type: format
+        fstype: fat32
+        volume: partition-1
+        label: ESP
+        preserve: false
+      - id: format-2
+        type: format
+        fstype: swap
+        volume: partition-2
+        label: SWAP
+        flag: swap
+        preserve: false
+      - id: format-3
+        type: format
+        fstype: ext4
+        volume: partition-3
+        label: ROOT
+        preserve: false
+      - id: format-1-efi
+        type: mount
+        path: /boot/efi
+        device: format-1
+      - id: format-2-swap
+        type: mount
+        path: none
+        device: format-2
+        options: pri=1,discard=pages
+      - id: format-3-root
+        type: mount
+        path: /
+        device: format-3
+        options: 'noatime,errors=remount-ro'
+  ssh:
+    install-server: true
+    allow-pw: true
+    authorized-keys: []
+  late-commands:
+    - cp /cdrom/ubuntu.sudoers /target/etc/sudoers.d/99-user-ubuntu
