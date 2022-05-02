@@ -19,7 +19,7 @@ EXTRAS_SRCDIR = config/extras/
 EXTRAS_DESTDIR = iso_root/
 
 GENISO_LABEL = MYUBISOIMG
-GENISO_FILENAME = ubuntu-custom-autoinstaller.`date +%Y%m%d.%H%M%S`.iso
+GENISO_FILENAME = ubuntu-custom-autoinstaller.$(shell date +%Y%m%d.%H%M%S).iso
 GENISO_HYBRIDMBR = /usr/lib/ISOLINUX/isohdpfx.bin
 GENISO_ISOLINUX = /usr/lib/ISOLINUX/isolinux.bin
 GENISO_SYSMODULES = /usr/lib/syslinux/modules/bios/
@@ -32,7 +32,7 @@ download:
 
 init:
 	sudo apt install isolinux syslinux-common xorriso
-	(test -d $(ISO_ROOT) && mv -f $(ISO_ROOT) $(ISO_ROOT).`date +%Y%m%d.%H%M%S`) || true
+	( test -d $(ISO_ROOT) && mv -f $(ISO_ROOT) $(ISO_ROOT).$(shell date +%Y%m%d.%H%M%S) ) || true
 	mkdir -p $(ISO_ROOT)
 	mkdir -p $(ISOLINUXTXT_DESTDIR)
 	mkdir -p $(ISO_MOUNTPOINT)
