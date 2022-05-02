@@ -31,6 +31,12 @@ user-dataファイル
 ----------------
 
 導入作業のカスタマイズは、config/user-data を中心に行ないます。
+
+* config/user-data.efi - UEFIで起動するためのESP領域を作成するための設定
+* config/user-data.mbr - MBR(BIOS)起動をするための設定
+
+必要なファイルを config/user-data に配置してください。
+
 主な追加設定の方法についてまとめます。
 
 デフォルトユーザー・パスワード
