@@ -20,17 +20,17 @@ GENISO_LABEL = MYUBISOIMG
 GENISO_FILENAME = ubuntu-custom-autoinstaller.$(shell date +%Y%m%d.%H%M%S).iso
 GENISO_BOOTIMG = boot/grub/i386-pc/eltorito.img
 GENISO_BOOTCATALOG = /boot.catalog
-GENISO_START_SECTOR = $(shell fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f2)
-GENISO_END_SECTOR = $(shell fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f3)
+GENISO_START_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | awk '{print $2}')
+GENISO_END_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | awk '{print $3}')
 
 download:
 	wget -N $(ISO_URLBASE)/$(ISO_FILENAME)
 
 init:
-	sudo apt install isolinux syslinux-common xorriso
+	sudo apt install isolinux syslinux-common xorriso rsync
 	( test -d $(ISO_ROOT) && mv -f $(ISO_ROOT) $(ISO_ROOT).$(shell date +%Y%m%d.%H%M%S) ) || true
 	mkdir -p $(ISO_ROOT)
-	mkdir -p $(ISO_MOUNTPOINT)
+	sudo mkdir -p $(ISO_MOUNTPOINT)
 	(mountpoint $(ISO_MOUNTPOINT) && sudo umount -q $(ISO_MOUNTPOINT)) || true
 	sudo mount -o ro,loop $(ISO_FILENAME) $(ISO_MOUNTPOINT)
 	rsync -av $(ISO_MOUNTPOINT)/. $(ISO_ROOT)/.
