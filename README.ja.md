@@ -18,12 +18,12 @@
 ISOイメージをダウンロードと初期ファイルの配置のため、次の作業は1回だけ実行します。
 
     $ make download
-	$ make init
+    $ make init
 
 以下の作業は、ISOファイルを生成する度に実行する必要があります。
-	
-	$ make setup
-	$ env LANG=C make geniso
+
+    $ make setup
+    $ env LANG=C make geniso
 
 Ubuntu 22.04ではfdiskコマンドの出力がlocaleによって変化するため、LANG=Cの指定が安全です。
 
@@ -60,7 +60,7 @@ user-data の authorized-keys の空リストを削除し、.pubファイルの�
     ssh:
       authorized-keys:
         - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH8mvfUPhRddvGXBxGcvwo5m3CRVOf8RbFXwaUa9mhLX comment"
-		- "..."
+        - "..."
 
 APU/APU2への対応
 ----------------
