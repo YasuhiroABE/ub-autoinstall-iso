@@ -20,8 +20,8 @@ GENISO_LABEL = MYUBISOIMG
 GENISO_FILENAME = ubuntu-custom-autoinstaller.$(shell date +%Y%m%d.%H%M%S).iso
 GENISO_BOOTIMG = boot/grub/i386-pc/eltorito.img
 GENISO_BOOTCATALOG = /boot.catalog
-GENISO_START_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | awk '{print $2}')
-GENISO_END_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | awk '{print $3}')
+GENISO_START_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f2)
+GENISO_END_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f3)
 
 download:
 	wget -N $(ISO_URLBASE)/$(ISO_FILENAME)
