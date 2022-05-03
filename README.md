@@ -23,9 +23,9 @@ ISOイメージをダウンロードと初期ファイルの配置のため、�
 以下の作業は、ISOファイルを生成する度に実行する必要があります。
 	
 	$ make setup
-	$ make geniso
+	$ env LANG=C make geniso
 
-新規にファイルを配置した場合には、適宜Makefileを編集してください。
+Ubuntu 22.04ではfdiskコマンドの出力がlocaleによって変化するため、LANG=Cの指定が安全です。
 
 user-dataファイル
 ----------------
