@@ -71,5 +71,16 @@ The following configurations are made to work with devices that only have a seri
 
 * Add ``console=ttyS0,115200n8`` to the end of the "append" line in config/isolinux/txt.cfg
 * Add ``console=ttyS0,115200n8`` to the end of the "linux" line in config/boot/grub/grub.cfg.
+* Add some isolinux related tasks to Makefile
 
-APU/APU2 do not support EFI boot, so please copy config/user-data.mbr to config/user-data.
+To create an ISO image for installation on the APU/APU2 from a USB stick, please conduct added tasks as follows,
+
+    $ make download
+    $ make init
+    $ make setup-apu
+
+    $ ln -fs user-data.mbr config/user-data
+    $ make setup
+    $ make geniso-apu
+
+

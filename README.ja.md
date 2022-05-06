@@ -69,9 +69,16 @@ APU/APU2への対応
 
 * config/isolinux/txt.cfg のappend行の最後に ``console=ttyS0,115200n8`` を加える
 * config/boot/grub/grub.cfg のlinux行の最後に ``console=ttyS0,115200n8`` を加える
+* isolinuxを利用したISOイメージファイルを作成するため、Makefileへのタスクの追加
 
-なお、APU/APU2はEFIブートに対応していないため、MBRブートをさせるため、config/user-data.mbr を config/user-data にコピーしてください。
+APU/APU2にUSBメモリからインストールするためのISOイメージを作成するには以下のように isolinux, syslinux-common パッケージに含まれるファイルを利用してください。
 
-この後に、``make setup && make geniso`` でISOイメージを作成してください。
+    $ make download
+    $ make init
+    $ make setup-apu
+
+    $ ln -fs user-data.mbr config/user-data
+    $ make setup
+    $ make geniso-apu
 
 以上
