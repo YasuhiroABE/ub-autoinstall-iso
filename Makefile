@@ -23,11 +23,18 @@ GENISO_BOOTCATALOG = /boot.catalog
 GENISO_START_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f2)
 GENISO_END_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f3)
 
+## for APU/APU2
+GENISO_ISOLINUX = /usr/lib/ISOLINUX/isolinux.bin
+GENISO_ISOLINUX_MODULEDIR = /usr/lib/syslinux/modules/bios/
+GENISO_HYBRIDMBR = /usr/lib/ISOLINUX/isohdpfx.bin
+ISOLINUX_CONFIGDIR = config/isolinux
+ISOLINUX_DIRNAME = isolinux
+
 download:
 	wget -N $(ISO_URLBASE)/$(ISO_FILENAME)
 
 init:
-	sudo apt install isolinux syslinux-common xorriso rsync
+	sudo apt install xorriso rsync
 	( test -d $(ISO_ROOT) && mv -f $(ISO_ROOT) $(ISO_ROOT).$(shell date +%Y%m%d.%H%M%S) ) || true
 	mkdir -p $(ISO_ROOT)
 	sudo mkdir -p $(ISO_MOUNTPOINT)
@@ -45,6 +52,13 @@ setup:
 	cp -f $(METADATA_SRC) $(METADATA_DEST)
 	rsync -av $(EXTRAS_SRCDIR)/. $(EXTRAS_DESTDIR)/.
 
+setup-isolinux:
+	sudo apt install isolinux syslinux-common
+	cp $(GENISO_ISOLINUX) $(ISO_ROOT)/
+	mkdir -p $(ISO_ROOT)/$(ISOLINUX_DIRNAME)
+	rsync -av $(GENISO_ISOLINUX_MODULEDIR)/. $(ISO_ROOT)/$(ISOLINUX_DIRNAME)/.
+	rsync -av $(ISOLINUX_CONFIGDIR)/. $(ISO_ROOT)/$(ISOLINUX_DIRNAME)/.
+
 geniso:
 	sudo xorriso -as mkisofs -volid $(GENISO_LABEL) \
 	-output $(GENISO_FILENAME) \
@@ -55,6 +69,18 @@ geniso:
 	-append_partition 2 28732ac11ff8d211ba4b00a0c93ec93b --interval:local_fs:$(GENISO_START_SECTOR)d-$(GENISO_END_SECTOR)d::'$(ISO_FILENAME)' \
 	-e '--interval:appended_partition_2_start_1782357s_size_8496d:all::' \
 	--grub2-mbr --interval:local_fs:0s-15s:zero_mbrpt,zero_gpt:'$(ISO_FILENAME)' \
+	"${ISO_ROOT}"
+
+geniso-apu:
+	sudo xorriso -as mkisofs -volid $(GENISO_LABEL) \
+	-output $(GENISO_FILENAME) \
+	-eltorito-boot /$(shell basename $(GENISO_ISOLINUX)) \
+	-eltorito-catalog $(GENISO_BOOTCATALOG) -no-emul-boot \
+	-boot-load-size 4 -boot-info-table -eltorito-alt-boot \
+	-no-emul-boot -isohybrid-gpt-basdat \
+	-append_partition 2 28732ac11ff8d211ba4b00a0c93ec93b --interval:local_fs:$(GENISO_START_SECTOR)d-$(GENISO_END_SECTOR)d::'$(ISO_FILENAME)' \
+	-isohybrid-mbr $(GENISO_HYBRIDMBR) \
+	-e '--interval:appended_partition_2_start_1782357s_size_8496d:all::' \
 	"${ISO_ROOT}"
 
 clean:
