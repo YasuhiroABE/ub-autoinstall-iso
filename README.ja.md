@@ -37,6 +37,9 @@ user-dataファイル
 
 必要なファイルを config/user-data に配置してください。
 
+デフォルトでは、config/user-data.efi が config/user-data にリンクされています。
+EFIをサポートしないシステムを使用されている場合には、config/user-data.mbr を使用してください。
+
 主な追加設定の方法についてまとめます。
 
 デフォルトユーザー・パスワード

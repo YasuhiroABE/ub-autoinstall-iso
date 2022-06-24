@@ -1,13 +1,13 @@
 Objective
 =========
 
-I have re-edited my workspace to create ISO images for kitting TX120s7 and Thinkpad x220/x230 for public use.
-This project originally used the preseed system of debian, but now it only supports AutoInstall for Ubuntu 22.04.
+I have re-edited my workspace to create ISO images for general use, originally it was developed for kitting TX120s7 and Thinkpad x220/x230.
+It originally used the preseed system of debian, but now it only supports AutoInstall for Ubuntu 22.04.
 
 References
 ==========
 
-In 22.04, the EFI boot image (boot/grub/efi.img) is no longer included in the ISO image.
+As of 22.04, the EFI boot image (boot/grub/efi.img) is no longer included in the ISO image.
 Please refer to the following document for more details and a workaround
 
 * https://askubuntu.com/questions/1403546/ubuntu-22-04-build-iso-both-mbr-and-efi
@@ -35,9 +35,12 @@ Customization of the installation process focuses on config/user-data.
 * config/user-data.efi - Configuration to create ESP area for UEFI boot
 * config/user-data.mbr - Configuration for MBR (BIOS) boot
 
-Please place the prefered configuration file to the config/user-data.
+Please place the preferred configuration file to the config/user-data.
 
-The following is a summary of the major settings.
+The config/user-data.efi file is linked as config/user-data as the default setting.
+If your system doesn't support the EFI boot, please use the config/user-data.mbr, instead.
+
+The following is a summary of the major setting parameters.
 
 Default user password
 ---------------------
