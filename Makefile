@@ -2,7 +2,7 @@
 .PHONY: download init setup geniso clean clean-up-all
 
 ISO_URLBASE = https://releases.ubuntu.com/22.04/
-ISO_FILENAME = ubuntu-22.04-live-server-amd64.iso
+ISO_FILENAME = ubuntu-22.04.1-live-server-amd64.iso
 ISO_MOUNTPOINT = /mnt/iso
 ISO_ROOT = iso_root
 
