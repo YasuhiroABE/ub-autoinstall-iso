@@ -1,69 +1,94 @@
 #cloud-config
 autoinstall:
-  version: 1
-  identity:
-    hostname: ub2204
-    username: ubuntu
-    # password: "secret" ($ openssl passwd -6 -salt $(openssl rand -hex 8) "secret")
-    password: "$6$1deb934eb89e6d28$Dvr8HQRlBvpX4PVSLB0tOcQqfD38L8glDWIk.tjQQNMh9OvXqhz45hPEC6yoJSMWGTvOdUX8n.f7XZ5EbtJy.1"
-  early-commands: []
-  storage:
-    swap:
-      size: 0
-    grub:
-      install_devices:
-        - partition-2
-    config:
-      - id: root-ssd
-        type: disk
-        ptable: msdos
-        match:
-          size: largest
-        wipe: superblock-recursive
-        preserve: false
-        grub_device: true
-        name: "CrucialSSD"
-      - id: partition-2
-        type: partition
-        size: 2G
-        number: 2
-        device: root-ssd
-        wipe: superblock
-        flag: swap
-        preserve: false
-      - id: partition-3
-        type: partition
-        size: -1
-        number: 3
-        device: root-ssd
-        wipe: superblock
-        preserve: false
-      - id: format-2
-        type: format
-        fstype: swap
-        volume: partition-2
-        label: SWAP
-        flag: swap
-        preserve: false
-      - id: format-3
-        type: format
-        fstype: ext4
-        volume: partition-3
-        label: ROOT
-        preserve: false
-      - id: format-2-swap
-        type: mount
-        path: none
-        device: format-2
-        options: pri=1,discard=pages
-      - id: format-3-root
-        type: mount
-        path: /
-        device: format-3
-        options: 'noatime,errors=remount-ro'
+  apt:
+    geoip: true
+    preserve_sources_list: false
+    primary:
+    - arches: [amd64, i386]
+      uri: http://archive.ubuntu.com/ubuntu
+    - arches: [default]
+      uri: http://ports.ubuntu.com/ubuntu-ports
+  identity: {hostname: glatt-hypervisor, password: $6$YU3Y3YEliWyXPsx4$aQkemkd77dk96VHKraAx8SmRX4i1fDQwRzu537c9un82UgDeMFm0bprtEjxwIbzW1s7CPUGeyUnVA22yKaXmw.,
+    realname: glatt, username: glatt}
+  keyboard: {layout: us, toggle: null, variant: ''}
+  locale: en_US.UTF-8
+  network:
+    ethernets:
+      enp0s31f6: {dhcp4: true}
+      enp1s0: {dhcp4: true}
+      enp2s0: {dhcp4: true}
+      enp3s0: {dhcp4: true}
+    version: 2
   ssh:
-    install-server: true
     allow-pw: true
     authorized-keys: []
+    install-server: true
+  storage:
+    config:
+#First disk
+     - id: sda
+       type: disk
+       ptable: gpt
+       path: /dev/sda
+       name: main_disk
+       grub_device: true
+       wipe: superblock-recursive
+     - id: bios_boot_a
+       type: partition
+       size: 1MB
+       device: sda
+       flag: bios_grub
+     - id: sda1
+       type: partition
+       size: -1
+       device: sda
+#Second disk
+     - id: sdb
+       type: disk
+       ptable: gpt
+       path: /dev/sdb
+       name: second_disk
+       grub_device: true
+       wipe: superblock-recursive
+     - id: bios_boot_b
+       type: partition
+       size: 1MB
+       device: sdb
+       flag: bios_grub
+     - id: sdb1
+       type: partition
+       size: -1
+       device: sdb   
+#RAID 1
+     - id: mddevice
+       name: md0
+       type: raid
+       raidlevel: raid1
+       devices:
+         - sda1
+         - sdb1
+     - id: md_root
+       type: format
+       fstype: ext4
+       volume: mddevice
+     - id: md_mount
+       type: mount
+       path: /
+       device: md_root
+  packages: 
+    - cockpit
   late-commands:
-    - cp /cdrom/ubuntu.sudoers /target/etc/sudoers.d/99-user-ubuntu
+    - curl -o /target/usr/bin/setup https://raw.githubusercontent.com/djcloutier/gch2/master/startup.sh
+    - chmod +x /target/usr/bin/setup
+  user-data: # Commands here run during first boot (cannot be interactive)
+    runcmd:
+      - |
+        #!/usr/bin/env bash
+        echo ''
+        echo '***************************************'
+        echo ' To complete install please run        '
+        echo ' the final setup by typing "setup"     '
+        echo '***************************************'
+        echo ''	
+  updates: security
+  version: 1
