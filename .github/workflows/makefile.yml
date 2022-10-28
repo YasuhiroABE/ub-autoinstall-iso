@@ -1,0 +1,30 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: configure
+      run: ./configure
+      
+    - name: Get ISO
+      run: make download
+      
+    - name: Initialize
+      run: make init
+      
+    - name: Setup env
+      run: make setup
+
+    - name: Build ISO
+      run: make geniso
