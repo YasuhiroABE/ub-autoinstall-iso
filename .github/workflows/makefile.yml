@@ -33,6 +33,6 @@ jobs:
         # Artifact name
         name: Upload ISO # optional, default is artifact
         # A file, directory or wildcard pattern that describes what to upload
-        path: ubuntu-custom*
+        path: glatt-client*
         # The desired behavior if no files are found using the provided path.
         retention-days: 1
