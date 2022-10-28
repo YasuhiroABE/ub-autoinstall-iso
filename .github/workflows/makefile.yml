@@ -13,9 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
-    - name: configure
-      run: ./configure
+   
       
     - name: Get ISO
       run: make download
