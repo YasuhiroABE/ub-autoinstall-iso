@@ -80,7 +80,7 @@ To create an ISO image for installation on the APU/APU2 from a USB stick, please
 
     $ make download
     $ make init
-    $ make setup-apu
+    $ make setup-isolinux
 
     $ ln -fs user-data.mbr config/user-data
     $ make setup
