@@ -10,9 +10,6 @@ autoinstall:
   storage:
     swap:
       size: 0
-    grub:
-      install_devices:
-        - partition-2
     config:
       - id: root-ssd
         type: disk

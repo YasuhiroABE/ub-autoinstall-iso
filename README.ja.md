@@ -78,7 +78,7 @@ APU/APU2にUSBメモリからインストールするためのISOイメージを
 
     $ make download
     $ make init
-    $ make setup-apu
+    $ make setup-isolinux
 
     $ ln -fs user-data.mbr config/user-data
     $ make setup
