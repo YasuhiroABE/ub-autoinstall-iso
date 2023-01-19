@@ -53,6 +53,7 @@ setup:
 	rsync -av $(EXTRAS_SRCDIR)/. $(EXTRAS_DESTDIR)/.
 
 setup-isolinux:
+	chmod 755 $(ISO_ROOT)
 	sudo apt install isolinux syslinux-common
 	cp $(GENISO_ISOLINUX) $(ISO_ROOT)/
 	mkdir -p $(ISO_ROOT)/$(ISOLINUX_DIRNAME)
