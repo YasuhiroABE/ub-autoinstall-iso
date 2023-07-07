@@ -2,7 +2,7 @@
 .PHONY: download init setup geniso clean clean-up-all
 
 ISO_URLBASE = https://releases.ubuntu.com/22.04/
-ISO_FILENAME = ubuntu-22.04.1-live-server-amd64.iso
+ISO_FILENAME = ubuntu-22.04.2-live-server-amd64.iso
 ISO_MOUNTPOINT = /mnt/iso
 ISO_ROOT = iso_root
 
@@ -72,7 +72,7 @@ geniso:
 	--grub2-mbr --interval:local_fs:0s-15s:zero_mbrpt,zero_gpt:'$(ISO_FILENAME)' \
 	"${ISO_ROOT}"
 
-geniso-apu:
+geniso-isolinux:
 	sudo xorriso -as mkisofs -volid $(GENISO_LABEL) \
 	-output $(GENISO_FILENAME) \
 	-eltorito-boot /$(shell basename $(GENISO_ISOLINUX)) \

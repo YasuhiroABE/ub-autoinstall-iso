@@ -67,8 +67,10 @@ Following is an example for providing ssh keys to the default user, ubuntu.
         - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAAIH8mvfUPhRddvGXBxGcvwo5m3CRVOf8RbFXwaUa9mhLX comment"
         - "..."
 
-Support for APU/APU2
+Support for APU/APU2 or other old machines
 --------------------
+
+APU and some old IA servers, such as RX100 S7, should use the isolinux.
 
 The following configurations are made to work with devices that only have a serial terminal.
 
@@ -84,6 +86,5 @@ To create an ISO image for installation on the APU/APU2 from a USB stick, please
 
     $ ln -fs user-data.mbr config/user-data
     $ make setup
-    $ make geniso-apu
-
+    $ make geniso-isolinux
 
