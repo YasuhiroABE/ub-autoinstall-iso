@@ -2,7 +2,8 @@
 目的
 ====
 これまで、TX120s7やThinkpad x220/x230をkittingするためのISOイメージを作成するための作業スペースを公開用に再編集しました。
-元々はpreseedを利用していましたが、Ubuntu 20.04以降のAutoInstallのみに対応しています。
+
+元々はpreseedを利用していましたが、Ubuntu 22.04以降のAutoInstallのみに対応しています。
 
 参考資料
 ========
@@ -27,7 +28,7 @@ ISOイメージをダウンロードと初期ファイルの配置のため、�
 
 Ubuntu 22.04ではfdiskコマンドの出力がlocaleによって変化するため、LANG=Cの指定が安全です。
 
-user-dataファイル
+config/user-dataファイル
 ----------------
 
 導入作業のカスタマイズは、config/user-data を中心に行ないます。
@@ -41,6 +42,20 @@ user-dataファイル
 EFIをサポートしないシステムを使用されている場合には、config/user-data.mbr を使用してください。
 
 主な追加設定の方法についてまとめます。
+
+config/bott/grub/gurb.cfg file
+------------------------------
+
+シリアルのみでビデオ出力のないサーバーを利用する場合には、config/boot/grub/grub.cfgファイルで次の行を有効にしてください。
+
+    linux	/casper/vmlinuz autoinstall "ds=nocloud-net;s=file:///cdrom/" quiet  --- console=ttyS0,115200n8
+
+既存の行は削除するか以下のようにコメントアウトしてください。
+
+    ## linux	/casper/vmlinuz autoinstall "ds=nocloud-net;s=file:///cdrom/" quiet ---
+
+x230のようにテストしたシステムでは"console=ttyS0,115200n8"が有効でも正常に動作します。
+しかしx270などの他のシステムでは正常に動作しない様子が確認されていますので、この設定には注意してください。
 
 デフォルトユーザー・パスワード
 ----------------------------
@@ -76,14 +91,19 @@ APU/APU2への対応
 
 APU/APU2にUSBメモリからインストールするためのISOイメージを作成するには以下のように isolinux, syslinux-common パッケージに含まれるファイルを利用してください。
 
+以下の手順は最初の1回だけ行えば十分です。
+繰り返し実行しても問題はありません。
+
     $ make download
     $ make init
     $ make setup-isolinux
-
     $ ln -fs user-data.mbr config/user-data
+    $ sed -i -e 's/---$/--- console=ttyS0,115200n8/' config/boot/grub/grub.cfg
+
+user-dataファイルを編集してから、ISOイメージを作成するには以下の手順を繰り返してください。
+
     $ make setup
     $ make geniso-apu
-
 
 ライセンス
 ----------

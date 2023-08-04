@@ -2,6 +2,7 @@ Objective
 =========
 
 I have re-edited my workspace to create ISO images for general use, originally it was developed for kitting TX120s7 and Thinkpad x220/x230.
+
 It originally used the preseed system of debian, but now it only supports AutoInstall for Ubuntu 22.04.
 
 References
@@ -27,8 +28,8 @@ The following tasks must be performed each time an ISO file is generated;
 
 In Ubuntu 22.04, the geniso task might be failed due to the locale, so it is safe to specify LANG=C.
 
-user-data file
---------------
+config/user-data file
+---------------------
 
 Customization of the installation process focuses on config/user-data.
 
@@ -41,6 +42,20 @@ The config/user-data.efi file is linked as config/user-data as the default setti
 If your system doesn't support the EFI boot, please use the config/user-data.mbr, instead.
 
 The following is a summary of the major setting parameters.
+
+config/bott/grub/gurb.cfg file
+------------------------------
+
+If you would like to use any headless server which doesn't have video output, but has a serial console, please enable the following line of config/boot/grub/grub.cfg file.
+
+    linux	/casper/vmlinuz autoinstall "ds=nocloud-net;s=file:///cdrom/" quiet  --- console=ttyS0,115200n8
+
+Delete the existing line or comment-out the existing line as follows.
+
+    ## linux	/casper/vmlinuz autoinstall "ds=nocloud-net;s=file:///cdrom/" quiet ---
+
+The tested system, such as x230, can work well even the "console=ttyS0,115200n8" setting was specified.
+However, other systems, such as x270, couldn't work well, so please take care of the setting.
 
 Default user password
 ---------------------
@@ -68,7 +83,7 @@ Following is an example for providing ssh keys to the default user, ubuntu.
         - "..."
 
 Support for APU/APU2 or other old machines
---------------------
+------------------------------------------
 
 APU and some old IA servers, such as RX100 S7, should use the isolinux.
 
@@ -80,11 +95,17 @@ The following configurations are made to work with devices that only have a seri
 
 To create an ISO image for installation on the APU/APU2 from a USB stick, please conduct added tasks as follows,
 
+Perform the following procedures only the first time.
+If you perform repeatedly, there is no side-effects.
+
     $ make download
     $ make init
     $ make setup-isolinux
-
     $ ln -fs user-data.mbr config/user-data
+	$ sed -i -e 's/---$/--- console=ttyS0,115200n8/' config/boot/grub/grub.cfg
+
+Repeat the following steps after editing the user-data file to generate an ISO image.
+
     $ make setup
     $ make geniso-isolinux
 
