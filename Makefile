@@ -1,6 +1,4 @@
 
-.PHONY: download init setup geniso clean clean-up-all
-
 ISO_URLBASE = https://releases.ubuntu.com/22.04/
 ISO_FILENAME = ubuntu-22.04.2-live-server-amd64.iso
 ISO_MOUNTPOINT = /mnt/iso
@@ -30,9 +28,11 @@ GENISO_HYBRIDMBR = /usr/lib/ISOLINUX/isohdpfx.bin
 ISOLINUX_CONFIGDIR = config/isolinux
 ISOLINUX_DIRNAME = isolinux
 
+.PHONY: download
 download:
 	wget -N $(ISO_URLBASE)/$(ISO_FILENAME)
 
+.PHONY: init
 init:
 	sudo apt install xorriso rsync
 	( test -d $(ISO_ROOT) && mv -f $(ISO_ROOT) $(ISO_ROOT).$(shell date +%Y%m%d.%H%M%S) ) || true
@@ -43,6 +43,7 @@ init:
 	rsync -av $(ISO_MOUNTPOINT)/. $(ISO_ROOT)/.
 	sudo umount $(ISO_MOUNTPOINT)
 
+.PHONY: setup
 setup:
 	chmod 755 $(ISO_ROOT)
 	chmod 644 $(GRUBCFG_DEST)
@@ -52,6 +53,7 @@ setup:
 	cp -f $(METADATA_SRC) $(METADATA_DEST)
 	rsync -av $(EXTRAS_SRCDIR)/. $(EXTRAS_DESTDIR)/.
 
+.PHONY: setup-isolinux
 setup-isolinux:
 	chmod 755 $(ISO_ROOT)
 	sudo apt install isolinux syslinux-common
@@ -60,6 +62,7 @@ setup-isolinux:
 	rsync -av $(GENISO_ISOLINUX_MODULEDIR)/. $(ISO_ROOT)/$(ISOLINUX_DIRNAME)/.
 	rsync -av $(ISOLINUX_CONFIGDIR)/. $(ISO_ROOT)/$(ISOLINUX_DIRNAME)/.
 
+.PHONY: geniso
 geniso:
 	sudo xorriso -as mkisofs -volid $(GENISO_LABEL) \
 	-output $(GENISO_FILENAME) \
@@ -72,6 +75,7 @@ geniso:
 	--grub2-mbr --interval:local_fs:0s-15s:zero_mbrpt,zero_gpt:'$(ISO_FILENAME)' \
 	"${ISO_ROOT}"
 
+.PHONY: geniso-isolinux
 geniso-isolinux:
 	sudo xorriso -as mkisofs -volid $(GENISO_LABEL) \
 	-output $(GENISO_FILENAME) \
@@ -84,9 +88,11 @@ geniso-isolinux:
 	-e '--interval:appended_partition_2_start_1782357s_size_8496d:all::' \
 	"${ISO_ROOT}"
 
+.PHONY: clean
 clean:
 	find . -type f -a -user "$(shell id -un)" -a -name '*~' -exec rm {} \; -print
 
+.PHONY: clean-up-all
 clean-up-all: clean
 	sudo rm -rf iso_root
 
