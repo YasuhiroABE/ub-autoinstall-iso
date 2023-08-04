@@ -7,6 +7,9 @@ autoinstall:
     # password: "secret" ($ openssl passwd -6 -salt $(openssl rand -hex 8) "secret")
     password: "$6$1deb934eb89e6d28$Dvr8HQRlBvpX4PVSLB0tOcQqfD38L8glDWIk.tjQQNMh9OvXqhz45hPEC6yoJSMWGTvOdUX8n.f7XZ5EbtJy.1"
   early-commands: []
+  keyboard:
+    layout: us
+  shutdown: poweroff
   storage:
     swap:
       size: 0
@@ -18,8 +21,7 @@ autoinstall:
           size: largest
         wipe: superblock-recursive
         preserve: false
-        grub_device: true
-        name: "CrucialSSD"
+        name: "SSD"
       - id: partition-1
         type: partition
         size: 256M
