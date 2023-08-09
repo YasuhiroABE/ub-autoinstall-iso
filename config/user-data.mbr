@@ -10,9 +10,14 @@ autoinstall:
   keyboard:
     layout: us
   shutdown: poweroff
+  package_update: false
+  package_upgrade: false
   storage:
+    grub:
+      install_devices:
+        - root-ssd
     swap:
-      size: 0
+      size: 2G
     config:
       - id: root-ssd
         type: disk
@@ -23,43 +28,23 @@ autoinstall:
         preserve: false
         grub_device: true
         name: "SSD"
-      - id: partition-2
-        type: partition
-        size: 2G
-        number: 2
-        device: root-ssd
-        wipe: superblock
-        flag: swap
-        preserve: false
-      - id: partition-3
+      - id: partition-1
         type: partition
         size: -1
-        number: 3
+        number: 1
         device: root-ssd
         wipe: superblock
         preserve: false
-      - id: format-2
-        type: format
-        fstype: swap
-        volume: partition-2
-        label: SWAP
-        flag: swap
-        preserve: false
-      - id: format-3
+      - id: format-1
         type: format
         fstype: ext4
-        volume: partition-3
+        volume: partition-1
         label: ROOT
         preserve: false
-      - id: format-2-swap
-        type: mount
-        path: none
-        device: format-2
-        options: pri=1,discard=pages
-      - id: format-3-root
+      - id: format-1-root
         type: mount
         path: /
-        device: format-3
+        device: format-1
         options: 'noatime,errors=remount-ro'
   ssh:
     install-server: true
