@@ -24,9 +24,10 @@ ISOイメージをダウンロードと初期ファイルの配置のため、�
 以下の作業は、ISOファイルを生成する度に実行する必要があります。
 
     $ make setup
-    $ env LANG=C make geniso
+    $ make geniso
 
 Ubuntu 22.04ではfdiskコマンドの出力がlocaleによって変化するため、LANG=Cの指定が安全です。
+もし"C"以外のLANGを指定したい場合には、MakefileのGENISO_LANG値を変更してください。
 
 config/user-dataファイル
 ----------------
@@ -103,7 +104,7 @@ APU/APU2にUSBメモリからインストールするためのISOイメージを
 user-dataファイルを編集してから、ISOイメージを作成するには以下の手順を繰り返してください。
 
     $ make setup
-    $ make geniso-apu
+    $ make geniso-isolinux
 
 ライセンス
 ----------

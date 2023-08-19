@@ -24,9 +24,10 @@ To download the ISO image and populate the initial files, the following tasks ar
 The following tasks must be performed each time an ISO file is generated;
 
     $ make setup
-    $ env LANG=C make geniso
+    $ make geniso
 
 In Ubuntu 22.04, the geniso task might be failed due to the locale, so it is safe to specify LANG=C.
+If you want to specify a LANG other than "C", change the GENISO_LANG value in the Makefile.
 
 config/user-data file
 ---------------------

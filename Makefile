@@ -1,6 +1,6 @@
 
 ISO_URLBASE = https://releases.ubuntu.com/22.04/
-ISO_FILENAME = ubuntu-22.04.2-live-server-amd64.iso
+ISO_FILENAME = ubuntu-22.04.3-live-server-amd64.iso
 ISO_MOUNTPOINT = /mnt/iso
 ISO_ROOT = iso_root
 
@@ -20,6 +20,7 @@ GENISO_BOOTIMG = boot/grub/i386-pc/eltorito.img
 GENISO_BOOTCATALOG = /boot.catalog
 GENISO_START_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f2)
 GENISO_END_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f3)
+GENISO_LANG = C
 
 ## for APU/APU2
 GENISO_ISOLINUX = /usr/lib/ISOLINUX/isolinux.bin
@@ -64,7 +65,7 @@ setup-isolinux:
 
 .PHONY: geniso
 geniso:
-	sudo xorriso -as mkisofs -volid $(GENISO_LABEL) \
+	sudo env LANG=$(GENISO_LANG) xorriso -as mkisofs -volid $(GENISO_LABEL) \
 	-output $(GENISO_FILENAME) \
 	-eltorito-boot $(GENISO_BOOTIMG) \
 	-eltorito-catalog $(GENISO_BOOTCATALOG) -no-emul-boot \
@@ -77,7 +78,7 @@ geniso:
 
 .PHONY: geniso-isolinux
 geniso-isolinux:
-	sudo xorriso -as mkisofs -volid $(GENISO_LABEL) \
+	sudo env LANG=$(GENISO_LANG) xorriso -as mkisofs -volid $(GENISO_LABEL) \
 	-output $(GENISO_FILENAME) \
 	-eltorito-boot /$(shell basename $(GENISO_ISOLINUX)) \
 	-eltorito-catalog $(GENISO_BOOTCATALOG) -no-emul-boot \
