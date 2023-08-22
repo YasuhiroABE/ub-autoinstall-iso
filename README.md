@@ -103,7 +103,7 @@ If you perform repeatedly, there is no side-effects.
     $ make init
     $ make setup-isolinux
     $ ln -fs user-data.mbr config/user-data
-	$ sed -i -e 's/---$/--- console=ttyS0,115200n8/' config/boot/grub/grub.cfg
+    $ sed -i -e 's/---$/--- console=ttyS0,115200n8/' config/boot/grub/grub.cfg
 
 Repeat the following steps after editing the user-data file to generate an ISO image.
 
