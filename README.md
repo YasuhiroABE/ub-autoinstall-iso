@@ -16,9 +16,9 @@ Please refer to the following document for more details and a workaround
 Instructions for use
 ====================
 
-Required Packages:
+Install the required packages.
 
-    $ apt-get update ; apt-get install git sudo rsync xorriso build-essential
+    $ sudo apt update && sudo apt install build-essential git rsync sudo xorriso wget
 
 To download the ISO image and populate the initial files, the following tasks are performed only once.
 

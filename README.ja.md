@@ -16,6 +16,10 @@
 利用手順
 =======
 
+必要なパッケージをインストールします。
+
+	$ sudo apt update && sudo apt install build-essential git rsync sudo xorriso wget
+
 ISOイメージをダウンロードと初期ファイルの配置のため、次の作業は1回だけ実行します。
 
     $ make download
