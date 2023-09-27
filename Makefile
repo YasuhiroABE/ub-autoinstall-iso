@@ -31,6 +31,7 @@ ISOLINUX_DIRNAME = isolinux
 
 .PHONY: download
 download:
+	sudo apt install wget
 	wget -N $(ISO_URLBASE)/$(ISO_FILENAME)
 
 .PHONY: init
@@ -57,7 +58,7 @@ setup:
 .PHONY: setup-isolinux
 setup-isolinux:
 	chmod 755 $(ISO_ROOT)
-	sudo apt install isolinux syslinux-common
+	sudo apt install isolinux rsync syslinux-common
 	cp $(GENISO_ISOLINUX) $(ISO_ROOT)/
 	mkdir -p $(ISO_ROOT)/$(ISOLINUX_DIRNAME)
 	rsync -av $(GENISO_ISOLINUX_MODULEDIR)/. $(ISO_ROOT)/$(ISOLINUX_DIRNAME)/.
@@ -96,4 +97,3 @@ clean:
 .PHONY: clean-up-all
 clean-up-all: clean
 	sudo rm -rf iso_root
-

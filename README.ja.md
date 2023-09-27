@@ -18,7 +18,8 @@
 
 必要なパッケージをインストールします。
 
-	$ sudo apt update && sudo apt install build-essential git rsync sudo xorriso wget
+    $ sudo apt update
+    $ sudo apt install git isolinux make rsync sudo syslinux-common xorriso wget
 
 ISOイメージをダウンロードと初期ファイルの配置のため、次の作業は1回だけ実行します。
 
@@ -70,7 +71,9 @@ user-data の username:、 password:行をそれぞれ希望に合わせて変�
 * ID: ubuntu
 * Password: secret
 
-password: 行に指定するハッシュ値は、``$ openssl passwd -6 -salt "$(openssl rand -hex 8)" secret`` コマンドで生成しています。
+password: 行に指定するハッシュ値は、以下のコマンドで生成しています。
+
+    $ openssl passwd -6 -salt "$(openssl rand -hex 8)" secret
 
 この他のカスタマイズ
 ===================
