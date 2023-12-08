@@ -19,7 +19,7 @@ Instructions for use
 Install the required packages.
 
     $ sudo apt update
-    $ sudo apt install git isolinux make rsync sudo syslinux-common xorriso wget
+    $ sudo apt install git make sudo
 
 To download the ISO image and populate the initial files, the following tasks are performed only once.
 
