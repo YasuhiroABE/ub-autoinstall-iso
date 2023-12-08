@@ -85,9 +85,7 @@ geniso-isolinux:
 	-eltorito-catalog $(GENISO_BOOTCATALOG) -no-emul-boot \
 	-boot-load-size 4 -boot-info-table -eltorito-alt-boot \
 	-no-emul-boot -isohybrid-gpt-basdat \
-	-append_partition 2 28732ac11ff8d211ba4b00a0c93ec93b --interval:local_fs:$(GENISO_START_SECTOR)d-$(GENISO_END_SECTOR)d::'$(ISO_FILENAME)' \
 	-isohybrid-mbr $(GENISO_HYBRIDMBR) \
-	-e '--interval:appended_partition_2_start_1782357s_size_8496d:all::' \
 	"${ISO_ROOT}"
 
 .PHONY: clean
