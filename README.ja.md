@@ -19,7 +19,7 @@
 必要なパッケージをインストールします。
 
     $ sudo apt update
-    $ sudo apt install git isolinux make rsync sudo syslinux-common xorriso wget
+    $ sudo apt install git make sudo
 
 ISOイメージをダウンロードと初期ファイルの配置のため、次の作業は1回だけ実行します。
 
