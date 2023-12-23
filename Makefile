@@ -18,9 +18,9 @@ GENISO_LABEL = MYUBISOIMG
 GENISO_FILENAME = ubuntu-custom-autoinstaller.$(shell date +%Y%m%d.%H%M%S).iso
 GENISO_BOOTIMG = boot/grub/i386-pc/eltorito.img
 GENISO_BOOTCATALOG = /boot.catalog
-GENISO_START_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f2)
-GENISO_END_SECTOR = $(shell sudo fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f3)
 GENISO_LANG = C
+GENISO_START_SECTOR = $(shell sudo env LANG=$(GENISO_LANG) fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f2)
+GENISO_END_SECTOR = $(shell sudo env LANG=$(GENISO_LANG) fdisk -l $(ISO_FILENAME) |grep iso2 | cut -d' ' -f3)
 
 ## for APU/APU2
 GENISO_ISOLINUX = /usr/lib/ISOLINUX/isolinux.bin
