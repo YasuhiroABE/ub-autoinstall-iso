@@ -5,6 +5,13 @@ I have re-edited my workspace to create ISO images for general use, originally i
 
 The original version used the preseed system of debian, but now it only supports AutoInstall for Ubuntu 22.04.
 
+History
+=======
+
+* 2024/04/26
+  * Support the Ubuntu 24.04 Desktop and Server versions now.
+  * Changed the github repository name to ub-autoinstall-iso
+
 References
 ==========
 
@@ -21,6 +28,10 @@ Install the required packages.
     $ sudo apt update
     $ sudo apt install git make sudo
 
+Checkout the target tag which you would like to install.
+
+    $ sudo git checkout refs/tags/22.04.4 -b my_22.04.4
+
 To download the ISO image and populate the initial files, the following tasks are performed only once.
 
     $ make download
@@ -31,7 +42,8 @@ The following tasks must be performed each time an ISO file is generated;
     $ make setup
     $ make geniso
 
-In Ubuntu 22.04, the geniso task might be failed due to the locale, so it is safe to specify LANG=C.
+The geniso task might be failed due to the locale, so it is safe to specify LANG=C.
+
 If you want to specify a LANG other than "C", change the GENISO_LANG value in the Makefile.
 
 config/user-data file
@@ -118,7 +130,7 @@ Repeat the following steps after editing the user-data file to generate an ISO i
 LICENSE
 -------
 
-    Copyright 2023 Yasuhiro ABE, <yasu@yasundial.org, yasu-abe@u-aizu.ac.jp>
+    Copyright 2023,2024 Yasuhiro ABE, <yasu@yasundial.org, yasu-abe@u-aizu.ac.jp>
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

@@ -5,6 +5,13 @@
 
 元々はpreseedを利用していましたが、Ubuntu 22.04以降のAutoInstallのみに対応しています。
 
+履歴
+====
+
+* 2024/04/26
+  * Ubuntu 24.04 Desktop版とServer版をサポートしました。
+  * リポジトリ名を  ub-autoinstall-iso に変更しました。
+
 参考資料
 ========
 
@@ -21,6 +28,10 @@
     $ sudo apt update
     $ sudo apt install git make sudo
 
+導入したいバージョンのタグをチェックアウトします。最新版を利用する場合は不要です。
+
+    $ sudo git checkout refs/tags/22.04.4 -b my_22.04.4
+
 ISOイメージをダウンロードと初期ファイルの配置のため、次の作業は1回だけ実行します。
 
     $ make download
@@ -31,7 +42,7 @@ ISOイメージをダウンロードと初期ファイルの配置のため、�
     $ make setup
     $ make geniso
 
-Ubuntu 22.04ではfdiskコマンドの出力がlocaleによって変化するため、LANG=Cの指定が安全です。
+fdiskコマンドの出力がlocaleによって変化するため、LANG=Cの指定が安全です。
 もし"C"以外のLANGを指定したい場合には、MakefileのGENISO_LANG値を変更してください。
 
 config/user-dataファイル
@@ -116,7 +127,7 @@ user-dataファイルを編集してから、ISOイメージを作成するに�
 ライセンス
 ----------
 
-    Copyright 2023 Yasuhiro ABE, <yasu@yasundial.org, yasu-abe@u-aizu.ac.jp>
+    Copyright 2023,2024 Yasuhiro ABE, <yasu@yasundial.org, yasu-abe@u-aizu.ac.jp>
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
