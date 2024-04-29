@@ -13,9 +13,6 @@ autoinstall:
   package_update: false
   package_upgrade: false
   storage:
-    grub:
-      install_devices:
-        - root-ssd
     swap:
       size: 2G
     config:
