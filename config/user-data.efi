@@ -85,3 +85,11 @@ autoinstall:
     authorized-keys: []
   late-commands:
     - cp /cdrom/ubuntu.sudoers /target/etc/sudoers.d/99-user-ubuntu
+    - rm -f /target/etc/systemd/system/rc-local.service
+    - rm -f /target/etc/rc.local
+    - cp /cdrom/rc-local.service /target/etc/systemd/system/
+    - cp /cdrom/rc.local /target/etc/
+    - cp /cdrom/postinstall.sh /target/root/
+    - chroot /target chmod +x /etc/rc.local
+    - chroot /target systemctl daemon-reload
+    - chroot /target systemctl enable rc-local
