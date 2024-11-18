@@ -9,7 +9,7 @@ autoinstall:
   early-commands: []
   keyboard:
     layout: us
-  shutdown: poweroff
+  shutdown: reboot
   package_update: false
   package_upgrade: false
   storage:
