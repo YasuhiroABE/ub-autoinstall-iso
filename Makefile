@@ -14,6 +14,12 @@ METADATA_SRC = config/meta-data
 METADATA_DEST = iso_root/meta-data
 EXTRAS_SRCDIR = config/extras/
 EXTRAS_DESTDIR = iso_root/
+RCLOCALSERV_SRC = config/rc-local.service
+RCLOCALSERV_DEST = iso_root/rc-local.service
+RCLOCAL_SRC = config/rc.local
+RCLOCAL_DEST = iso_root/rc.local
+POSTINST_SRC = config/postinstall.sh
+POSTINST_DEST = iso_root/postinstall.sh
 
 GENISO_LABEL = MYUBISOIMG
 GENISO_FILENAME = ubuntu-custom-autoinstaller.$(shell date +%Y%m%d.%H%M%S).iso
@@ -54,6 +60,9 @@ setup:
 	chmod 755 $(ISO_ROOT)
 	cp -f $(USERDATA_SRC) $(USERDATA_DEST)
 	cp -f $(METADATA_SRC) $(METADATA_DEST)
+	cp -f $(RCLOCALSERV_SRC) $(RCLOCALSERV_DEST)
+	cp -f $(RCLOCAL_SRC) $(RCLOCAL_DEST)
+	cp -f $(POSTINST_SRC) $(POSTINST_DEST)
 	rsync -av $(EXTRAS_SRCDIR)/. $(EXTRAS_DESTDIR)/.
 
 .PHONY: setup-isolinux
