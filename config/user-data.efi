@@ -9,7 +9,7 @@ autoinstall:
   early-commands: []
   keyboard:
     layout: us
-  shutdown: poweroff
+  shutdown: reboot
   storage:
     swap:
       size: 0
