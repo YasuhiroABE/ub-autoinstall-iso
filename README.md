@@ -61,7 +61,7 @@ If your system doesn't support the EFI boot, please use the config/user-data.mbr
 
 The following is a summary of the major setting parameters.
 
-config/boot/grub/gurb.cfg file
+config/boot/grub/grub.cfg file
 ------------------------------
 
 If you would like to use any headless server which doesn't have video output, but has a serial console, please enable the following line of config/boot/grub/grub.cfg file.
