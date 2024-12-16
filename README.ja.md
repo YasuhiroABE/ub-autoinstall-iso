@@ -60,7 +60,7 @@ EFIをサポートしないシステムを使用されている場合には、co
 
 主な追加設定の方法についてまとめます。
 
-config/boot/grub/gurb.cfg file
+config/boot/grub/grub.cfg file
 ------------------------------
 
 シリアルのみでビデオ出力のないサーバーを利用する場合には、config/boot/grub/grub.cfgファイルで次の行を有効にしてください。
