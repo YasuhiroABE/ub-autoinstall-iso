@@ -1,12 +1,15 @@
 
-目的
-====
-これまで、TX120s7やThinkpad x220/x230をkittingするためのISOイメージを作成するための作業スペースを公開用に再編集しました。
+プロジェクトの目的
+==================
+元々Ubuntu 20.04とTX120s7やThinkpad x220/x230をkittingするためのISOイメージを作成するためのプロジェクトを、汎用版として再編集しました。
 
 元々はpreseedを利用していましたが、Ubuntu 22.04以降のAutoInstallのみに対応しています。
 
 履歴
 ====
+
+* 2025/03/21
+  * ベースとなるISOイメージファイルを24.04.2に変更しました。
 
 * 2024/04/26
   * Ubuntu 24.04 Desktop版とServer版をサポートしました。
@@ -16,7 +19,8 @@
 ========
 
 22.04ではEFIブートイメージ(boot/grub/efi.img)がISOイメージに含まれなくなりました。
-詳細と対応策については下記の文書を参照してください。
+
+もしISOイメージの作成方法について興味があれば、詳細と対応策について下記の文書を参照してください。
 
 * https://askubuntu.com/questions/1403546/ubuntu-22-04-build-iso-both-mbr-and-efi
 
@@ -30,7 +34,7 @@
 
 導入したいバージョンのタグをチェックアウトします。最新版を利用する場合は不要です。
 
-    $ sudo git checkout refs/tags/22.04.4 -b my_22.04.4
+    $ sudo git checkout refs/tags/24.04.2 -b my_24.04.2
 
 ISOイメージをダウンロードと初期ファイルの配置のため、次の作業は1回だけ実行します。
 
@@ -43,6 +47,7 @@ ISOイメージをダウンロードと初期ファイルの配置のため、�
     $ make geniso
 
 fdiskコマンドの出力がlocaleによって変化するため、LANG=Cの指定が安全です。
+
 もし"C"以外のLANGを指定したい場合には、MakefileのGENISO_LANG値を変更してください。
 
 config/user-dataファイル
@@ -51,11 +56,12 @@ config/user-dataファイル
 導入作業のカスタマイズは、config/user-data を中心に行ないます。
 
 * config/user-data.efi - UEFIで起動するためのESP領域を作成するための設定
-* config/user-data.mbr - MBR(BIOS)起動をするための設定
+* config/user-data.mbr - MBR(BIOS)起動をするための設定(user-data.efiではbootしない場合)
 
-必要なファイルを config/user-data に配置してください。
+いずれか必要なファイルを config/user-data の名前で配置してください。
 
 デフォルトでは、config/user-data.efi が config/user-data にリンクされています。
+
 EFIをサポートしないシステムを使用されている場合には、config/user-data.mbr を使用してください。
 
 主な追加設定の方法についてまとめます。
@@ -88,6 +94,13 @@ password: 行に指定するハッシュ値は、以下のコマンドで生成�
 
 この他のカスタマイズ
 ===================
+
+Ansibleの利用を想定したsudoersファイルの配置
+--------------------------------------------
+
+ユーザー"ubuntu"に対してパスワードを要求しないように設定したsudoersファイルを含んでいます。
+
+変更したい場合は config/extras/ubuntu.sudoers の内容を編集してください。
 
 ssh鍵情報の登録
 ---------------
@@ -127,7 +140,7 @@ user-dataファイルを編集してから、ISOイメージを作成するに�
 ライセンス
 ----------
 
-    Copyright 2023,2024 Yasuhiro ABE, <yasu@yasundial.org, yasu-abe@u-aizu.ac.jp>
+    Copyright 2023-2025 Yasuhiro ABE, <yasu@yasundial.org, yasu-abe@u-aizu.ac.jp>
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
