@@ -19,6 +19,7 @@ autoinstall:
         ptable: gpt
         match:
           size: largest
+          ssd: true
         wipe: superblock-recursive
         preserve: false
         name: "SSD"
