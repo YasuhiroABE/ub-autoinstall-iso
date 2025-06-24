@@ -21,6 +21,7 @@ autoinstall:
         ptable: msdos
         match:
           size: largest
+          ssd: true
         wipe: superblock-recursive
         preserve: false
         grub_device: true
