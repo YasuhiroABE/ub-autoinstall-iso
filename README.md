@@ -34,7 +34,7 @@ Install the required packages.
 
 Checkout the target tag which you would like to install.
 
-    $ sudo git checkout refs/tags/24.04.2 -b my_24.04.2
+    $ git checkout refs/tags/24.04.2 -b my_24.04.2
 
 To download the ISO image and populate the initial files, the following tasks are performed only once.
 
