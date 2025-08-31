@@ -1,7 +1,7 @@
 
 ISO_URLBASE = https://releases.ubuntu.com/24.04/
-# ISO_FILENAME = ubuntu-24.04.2-desktop-amd64.iso
-ISO_FILENAME = ubuntu-24.04.2-live-server-amd64.iso
+# ISO_FILENAME = ubuntu-24.04.3-desktop-amd64.iso
+ISO_FILENAME = ubuntu-24.04.3-live-server-amd64.iso
 ISO_MOUNTPOINT = /mnt/iso
 ISO_ROOT = iso_root
 
