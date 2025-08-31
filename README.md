@@ -5,18 +5,9 @@ This project provides tools to create ISO images for general use, originally dev
 
 It supports AutoInstall for Ubuntu 22.04 and later versions.
 
-History
-=======
-
-* 2025/08/31
-  * Updated the base ISO image filename.
-
-* 2025/03/21
-  * Updated the base ISO image filename.
-
 * 2024/04/26
   * Support the Ubuntu 24.04 Desktop and Server versions now.
-  * Changed the github repository name to ub-autoinstall-iso
+  * Change the github repository name to ub-autoinstall-iso
 
 References
 ==========
