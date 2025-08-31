@@ -8,6 +8,9 @@ It supports AutoInstall for Ubuntu 22.04 and later versions.
 History
 =======
 
+* 2025/08/31
+  * Updated the base ISO image filename.
+
 * 2025/03/21
   * Updated the base ISO image filename.
 
@@ -34,7 +37,7 @@ Install the required packages.
 
 Checkout the target tag which you would like to install.
 
-    $ git checkout refs/tags/24.04.2 -b my_24.04.2
+    $ git checkout refs/tags/24.04.3 -b my_24.04.3
 
 To download the ISO image and populate the initial files, the following tasks are performed only once.
 
