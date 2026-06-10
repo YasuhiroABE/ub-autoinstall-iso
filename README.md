@@ -3,7 +3,7 @@ Project Objective
 
 This project provides tools to create ISO images for general use, originally developed for kitting TX120s7 and Thinkpad x220/x230 and for Ubuntu 20.04 LTS.
 
-It supports AutoInstall for Ubuntu 22.04 and later versions.
+It supports AutoInstall for Ubuntu 22.04 and later LTS versions.
 
 * 2026/06/10
   * Test with the Ubuntu 26.04 Desktop and Server ISOs

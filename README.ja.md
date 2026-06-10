@@ -3,7 +3,7 @@
 ==================
 元々Ubuntu 20.04とTX120s7やThinkpad x220/x230をkittingするためのISOイメージを作成するためのプロジェクトを、汎用版として再編集しました。
 
-元々はpreseedを利用していましたが、Ubuntu 22.04以降のAutoInstallのみに対応しています。
+元々はpreseedを利用していましたが、Ubuntu 22.04以降のLTS版のAutoInstallに対応しています。
 
 履歴
 ====
