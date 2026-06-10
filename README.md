@@ -1,12 +1,15 @@
 Project Objective
 =================
 
-This project provides tools to create ISO images for general use, originally developed for kitting TX120s7 and Thinkpad x220/x230 and for Ubuntu 20.04 LTS. 
+This project provides tools to create ISO images for general use, originally developed for kitting TX120s7 and Thinkpad x220/x230 and for Ubuntu 20.04 LTS.
 
 It supports AutoInstall for Ubuntu 22.04 and later versions.
 
+* 2026/06/10
+  * Test with the Ubuntu 26.04 Desktop and Server ISOs
+
 * 2024/04/26
-  * Support the Ubuntu 24.04 Desktop and Server versions now.
+  * Support the Ubuntu 24.04 Desktop and Server versions now
   * Change the github repository name to ub-autoinstall-iso
 
 References
@@ -28,7 +31,7 @@ Install the required packages.
 
 Checkout the target tag which you would like to install.
 
-    $ git checkout refs/tags/24.04.3 -b my_24.04.3
+    $ git checkout refs/tags/26.04 -b my_26.04
 
 To download the ISO image and populate the initial files, the following tasks are performed only once.
 
